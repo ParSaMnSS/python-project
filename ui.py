@@ -67,3 +67,17 @@ class UserInterface:
                 return strategy_map[choice]
             else:
                 print("Invalid choice. Please enter a number from 1 to 2.")
+
+    def get_file_filter(self) -> str | None:
+        """Asks the user if they want to filter files and gets the filter."""
+        while True:
+            choice = input("Do you want to filter files by extension? (y/n): ").lower()
+            if choice in ['y', 'n']:
+                break
+            else:
+                print("Invalid choice. Please enter 'y' or 'n'.")
+        
+        if choice == 'y':
+            return input("Enter the file extension to filter by (e.g., '.pdf'): ")
+        else:
+            return None

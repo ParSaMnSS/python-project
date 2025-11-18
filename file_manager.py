@@ -9,11 +9,17 @@ class FileManager:
         if not self.directory.is_dir():
             raise NotADirectoryError(f"'{directory}' is not a valid directory.")
 
-    def get_files(self) -> list[Path]:
-        """Returns a list of files in the directory."""
-        return [f for f in self.directory.iterdir() if f.is_file()]
+    def get_files(self, extension_filter: str | None = None) -> list[Path]:
+        """Returns a list of files in the directory, with an optional filter."""
+        files = [f for f in self.directory.iterdir() if f.is_file()]
+        if extension_filter:
+            return [f for f in files if f.suffix == extension_filter]
+        return files
 
-    def execute_operation(self, operation: FileOperation):
-        """Executes a given file operation."""
-        files = self.get_files()
+    def execute_operation(self, operation: FileOperation, extension_filter: str | None = None):
+        """Executes a given file operation on filtered files."""
+        files = self.get_files(extension_filter)
+        if not files:
+            print("No files found matching the filter.")
+            return
         operation.execute(files)
