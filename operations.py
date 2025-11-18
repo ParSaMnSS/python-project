@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import os
 import shutil
 from pathlib import Path
+from datetime import datetime
 
 class FileOperation(ABC):
     """An abstract base class for file operations."""
@@ -76,6 +77,12 @@ class Organizer(FileOperation):
                 shutil.move(str(file), str(dest_dir))
                 print(f"Moved {file.name} to {dest_dir}")
         elif self.strategy == 'date':
-            # This is a placeholder for date-based organization.
-            # A more robust implementation would be needed.
-            print("Date-based organization is not yet implemented.")
+            for file in files:
+                if file.is_dir():
+                    continue
+                mod_time = file.stat().st_mtime
+                date_str = datetime.fromtimestamp(mod_time).strftime('%Y-%m')
+                dest_dir = file.parent / date_str
+                dest_dir.mkdir(exist_ok=True)
+                shutil.move(str(file), str(dest_dir))
+                print(f"Moved {file.name} to {dest_dir}")

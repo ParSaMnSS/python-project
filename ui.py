@@ -57,16 +57,13 @@ class UserInterface:
         """Prompts the user for a valid organization strategy."""
         print("\nOrganize by:")
         print("1. Extension")
-        print("2. Date (not yet implemented)")
+        print("2. Date")
         
         strategy_map = {'1': 'extension', '2': 'date'}
         
         while True:
             choice = input("Enter the number for the organization strategy: ")
             if choice in strategy_map:
-                if strategy_map[choice] == 'date':
-                    print("Date-based organization is not yet implemented. Please choose another option.")
-                    continue
                 return strategy_map[choice]
             else:
                 print("Invalid choice. Please enter a number from 1 to 2.")
