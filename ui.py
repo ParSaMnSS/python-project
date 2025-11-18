@@ -26,3 +26,47 @@ class UserInterface:
                 return choice
             else:
                 print("Invalid choice. Please enter a number from 1 to 3.")
+
+    def get_sort_key(self) -> str:
+        """Prompts the user for a valid sort key."""
+        print("\nSort by:")
+        print("1. Name")
+        print("2. Date")
+        print("3. Size")
+        print("4. Extension")
+        
+        key_map = {'1': 'name', '2': 'date', '3': 'size', '4': 'extension'}
+        
+        while True:
+            choice = input("Enter the number for the sort key: ")
+            if choice in key_map:
+                return key_map[choice]
+            else:
+                print("Invalid choice. Please enter a number from 1 to 4.")
+
+    def get_renaming_pattern(self) -> str:
+        """Prompts the user for a renaming pattern."""
+        print("\nEnter the renaming pattern.")
+        print("You can use the following placeholders:")
+        print("  {index} - The file number (e.g., 1, 2, 3)")
+        print("  {name}  - The original file name (without extension)")
+        print("  {ext}   - The original file extension (e.g., .txt)")
+        return input("Pattern: ")
+
+    def get_organizer_strategy(self) -> str:
+        """Prompts the user for a valid organization strategy."""
+        print("\nOrganize by:")
+        print("1. Extension")
+        print("2. Date (not yet implemented)")
+        
+        strategy_map = {'1': 'extension', '2': 'date'}
+        
+        while True:
+            choice = input("Enter the number for the organization strategy: ")
+            if choice in strategy_map:
+                if strategy_map[choice] == 'date':
+                    print("Date-based organization is not yet implemented. Please choose another option.")
+                    continue
+                return strategy_map[choice]
+            else:
+                print("Invalid choice. Please enter a number from 1 to 2.")

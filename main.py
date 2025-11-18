@@ -13,16 +13,14 @@ def main():
         choice = ui.get_operation_choice()
         
         if choice == '1':
-            # For now, let's use a default sort key.
-            # This can be expanded to ask the user for the sort key.
-            operation = Sorter(sort_key='name')
+            sort_key = ui.get_sort_key()
+            operation = Sorter(sort_key=sort_key)
         elif choice == '2':
-            # Example pattern. This should be requested from the user.
-            pattern = input("Enter the renaming pattern (e.g., 'new_file_{index}.txt'): ")
+            pattern = ui.get_renaming_pattern()
             operation = Renamer(pattern)
         elif choice == '3':
-            # Default organization strategy.
-            operation = Organizer(strategy='extension')
+            strategy = ui.get_organizer_strategy()
+            operation = Organizer(strategy=strategy)
         
         file_manager.execute_operation(operation)
         print("\nOperation completed successfully.")
