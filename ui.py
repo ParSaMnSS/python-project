@@ -19,13 +19,14 @@ class UserInterface:
         print("1. Sort files")
         print("2. Rename files")
         print("3. Organize files")
+        print("4. Archive files")
         
         while True:
             choice = input("Enter the number of the operation you want to perform: ")
-            if choice in ['1', '2', '3']:
+            if choice in ['1', '2', '3', '4']:
                 return choice
             else:
-                print("Invalid choice. Please enter a number from 1 to 3.")
+                print("Invalid choice. Please enter a number from 1 to 4.")
 
     def get_sort_key(self) -> str:
         """Prompts the user for a valid sort key."""

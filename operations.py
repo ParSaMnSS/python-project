@@ -3,6 +3,7 @@ import os
 import shutil
 from pathlib import Path
 from datetime import datetime
+import tempfile
 
 class FileOperation(ABC):
     """An abstract base class for file operations."""
@@ -86,3 +87,37 @@ class Organizer(FileOperation):
                 dest_dir.mkdir(exist_ok=True)
                 shutil.move(str(file), str(dest_dir))
                 print(f"Moved {file.name} to {dest_dir}")
+
+class Archiver(FileOperation):
+    """Compresses files into a ZIP archive."""
+
+    def __init__(self, output_name: str = 'archive'):
+        self.output_name = output_name
+
+    def execute(self, files: list[Path]):
+        if not files:
+            print("No files to archive.")
+            return
+
+        # Get the parent directory from the first file
+        parent_dir = files[0].parent
+        archive_path_base = parent_dir / self.output_name
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            
+            # Copy files to the temporary directory
+            for file in files:
+                if file.is_file():
+                    shutil.copy(file, temp_path / file.name)
+            
+            # Create the archive from the temporary directory
+            try:
+                archive_path = shutil.make_archive(
+                    base_name=str(archive_path_base),
+                    format='zip',
+                    root_dir=temp_path
+                )
+                print(f"Successfully created archive: {Path(archive_path).resolve()}")
+            except Exception as e:
+                print(f"Error creating archive: {e}")
